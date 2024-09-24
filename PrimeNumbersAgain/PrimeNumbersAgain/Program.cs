@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PrimeNumbersAgain
 {
@@ -25,8 +27,18 @@ namespace PrimeNumbersAgain
 
         static int FindNthPrime(int n)
         {
-            return 0;
+            if (n == 1) return 2;
+            List<int> allNums = Enumerable.Range(2, 100).ToList();
+            for (int i = 1; i < allNums.Count; i++)
+            {
+                for (int j = i + i; j < allNums.Count; j+=i)
+                {
+                    allNums.Remove(allNums[j]);                }
+            }
+            return allNums[n-1];
         }
+
+  
 
         static int GetNumber()
         {
@@ -54,7 +66,7 @@ namespace PrimeNumbersAgain
             Console.WriteLine(".##......##..##....##....##...##..##..........##.");
             Console.WriteLine(".##......##..##..######..##...##..######...####..");
             Console.WriteLine(".................................................\n\n");
-            Console.WriteLine("Nth Prime Solver O-Matic Online..\nGuaranteed to find primes up to 2 million in under 30 seconds!\n\n");
+            Console.WriteLine("Nth Prime Solver O-Matic Online..\nGuaranteed to find primes up to 2 million in under 3 seconds!\n\n");
             
         }
 
@@ -63,7 +75,7 @@ namespace PrimeNumbersAgain
             Console.WriteLine("\n");
             Console.Write("Time Check: ");
 
-            if (time <= 10)
+            if (time <= 3)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("Pass");
