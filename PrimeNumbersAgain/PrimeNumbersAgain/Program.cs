@@ -21,34 +21,47 @@ namespace PrimeNumbersAgain
             timer.Stop();
             
             
-            Console.WriteLine($"\nToo easy.. {prime} is the nth prime when n is {n}. I found that answer in {timer.Elapsed.Seconds} seconds.");
+            Console.WriteLine($"\nToo easy.. {prime} is the nth prime when n is {n}. I found that answer in {timer.Elapsed.Seconds} seconds and {timer.Elapsed.Milliseconds} milliseconds.");
 
             EvaluatePassingTime(timer.Elapsed.Seconds);
         }
 
         static int FindNthPrime(int n)
         {
+            //returns 2 if n is one, this simplifies some cases for calculation
             if (n == 1) return 2;
+
             bool[] startList = new bool[32452846];
+
+            //sets the list to true
             for(int i = 0; i < startList.Length; i++)
             {
                 startList[i] = true;
             }
+
+            //calls and returns filteredNumbers
             return FilterNumbers(startList, n);
         }
 
         static int FilterNumbers(bool[] numbers, int target)
         {
             List<int> result = new List<int>();
+
+            //sets all elements that are multiples of prime numbers to false, then adds all true elements to an int list
             for (int i = 2; i < numbers.Length; i++)
             {
+
                 if (numbers[i])
                 {
                     result.Add(i);
+                    if (result.Count > target)
+                        return result[target - 1];
                     for (int j = i + i; j < numbers.Length; j += i)
                         numbers[j] = false;
                 }
+
             }
+
             return result[target-1];
         }
 
